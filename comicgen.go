@@ -356,6 +356,7 @@ func loadEmotions(path string) (e map[Emotion][]int) {
 
 	file, err := os.Open(path)
 	if err != nil {
+		log.Println("error loading emotions =", path)
 		return
 	}
 
@@ -621,12 +622,14 @@ func (comic *ComicGen) MakeComic(script *Script) (img image.Image, err error) {
 func loadImage(path string) (image.Image, error) {
 	file, err := os.Open(path)
 	if err != nil {
+		log.Println("load image error at %s", path)
 		return nil, err
 	}
 	defer file.Close()
 
 	img, _, err := image.Decode(bufio.NewReader(file))
 	if err != nil {
+		log.Println("load image error at %s", path)
 		return nil, err
 	}
 
@@ -636,6 +639,7 @@ func loadImage(path string) (image.Image, error) {
 func fetchAvatar(url string) (image.Image, error) {
 	resp, err := http.Get(url)
 	if err != nil {
+		log.Println("fetch avatar image error")
 		return nil, err
 	}
 
